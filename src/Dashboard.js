@@ -25,10 +25,14 @@ function Dashboard(props) {
     }
   ];
 
+  function onAdoptPet(e) {
+    console.log('Pet Adopted: WOOOO!!!');
+  }
+
     return (
       <div className="Dashboard">
-        <Pet animal={catToAdopt[0]}/>
-        <Pet animal={dogToAdopt[0]}/>
+        <Pet animal={catToAdopt[0]} onAdoptPet={onAdoptPet}/>
+        <Pet animal={dogToAdopt[0]} onAdoptPet={onAdoptPet}/>
       </div>
     );
 }
