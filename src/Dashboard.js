@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Pet from './components/Pet';
+import {fetchCat} from './actions/cat';
 
 function Dashboard(props) {
 
@@ -26,6 +27,7 @@ function Dashboard(props) {
   ];
 
   function onAdoptPet(e) {
+    fetchCat();
     console.log('Pet Adopted: WOOOO!!!');
   }
 
