@@ -1,47 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Pet from './components/Pet';
-import {fetchCat} from './actions/cat';
+import {fetchCat, deleteCat} from './actions/cat';
+import { fetchDog, deleteDog } from './actions/dog';
+import { connect } from 'react-redux';
 
-function Dashboard(props) {
+import './dashboard.css';
 
-  const catToAdopt = [{
-    imageURL:'https://assets3.thrillist.com/v1/image/2622128/size/tmg-slideshow_l.jpg', 
-    imageDescription: 'Orange bengal cat with black stripes lounging on concrete.',
-    name: 'Fluffy',
-    sex: 'Female',
-    age: 2,
-    breed: 'Bengal',
-    story: 'Thrown on the street'
-  }] 
-
-  const dogToAdopt = [
-    {
-      imageURL: 'http://www.dogster.com/wp-content/uploads/2015/05/Cute%20dog%20listening%20to%20music%201_1.jpg',
-      imageDescription: 'A smiling golden-brown golden retreiver listening to music.',
-      name: 'Zeus',
-      sex: 'Male',
-      age: 3,
-      breed: 'Golden Retriever',
-      story: 'Owner Passed away'
-    }
-  ];
-
-  function onAdoptPet(e) {
-    fetchCat();
-    console.log('Pet Adopted: WOOOO!!!');
+export class Dashboard extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(fetchCat());
+    this.props.dispatch(fetchDog());
   }
 
+  onAdoptCat() {
+    this.props.dispatch(deleteCat());
+    this.props.dispatch(fetchCat());
+  }
+
+  onAdoptDog() {
+    this.props.dispatch(deleteDog());
+    this.props.dispatch(fetchDog());
+  }
+
+  render() {
     return (
       <div className="Dashboard">
-        <Pet animal={catToAdopt[0]} onAdoptPet={onAdoptPet}/>
-        <Pet animal={dogToAdopt[0]} onAdoptPet={onAdoptPet}/>
+        <h1 className='welcome'>Welcome to Petful!</h1>
+        <Pet animal={this.props.catToAdopt} onAdoptPet={() => this.onAdoptCat()} animalType={'cats'}/>
+        <Pet animal={this.props.dogToAdopt} onAdoptPet={() => this.onAdoptDog()} animalType={'dogs'}/>
       </div>
     );
+  }
 }
 
 const mapStateToProps = state => ({
-  catToAdopt: state,
-  dogToAdopt: state
+  catToAdopt: state.cats.data,
+  dogToAdopt: state.dogs.data
 })
 
-export default Dashboard;
+export default connect(mapStateToProps)(Dashboard);

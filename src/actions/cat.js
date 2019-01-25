@@ -25,7 +25,6 @@ export const deleteCatError = error => ({
 });
 
 export const fetchCat = () => (dispatch) => {
-    console.log('fired')
     return fetch(`${API_BASE_URL}/cat`, {
         method: 'GET',
         headers: {
@@ -42,19 +41,15 @@ export const fetchCat = () => (dispatch) => {
 };
 
 export const deleteCat = () => (dispatch) => {
-    return (
-        fetch(`${API_BASE_URL}/cat`, {
+    dispatch(deleteCatSuccess())
+    return fetch(`${API_BASE_URL}/cat`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
-            .then( () => {
-                dispatch(deleteCatSuccess());
-            })
             .catch(err => {
                 dispatch(deleteCatError(err));
-            })
-    )   
+            }) 
 };
