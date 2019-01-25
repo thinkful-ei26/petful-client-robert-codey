@@ -1,3 +1,1 @@
-// {
-//   echo '{ "extends": "react-app"}'
-// }
+{"extends":"react-app"}
