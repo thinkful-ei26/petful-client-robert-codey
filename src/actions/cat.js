@@ -25,6 +25,7 @@ export const deleteCatError = error => ({
 });
 
 export const fetchCat = () => (dispatch) => {
+    console.log(`${API_BASE_URL}/cat`)
     return fetch(`${API_BASE_URL}/cat`, {
         method: 'GET',
         headers: {
